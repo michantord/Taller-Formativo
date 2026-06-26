@@ -1,0 +1,71 @@
+﻿@model HomeViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if(!string.IsNullOrEmpty(ViewBag.ErrorMessage)) {
+        @ViewBag.ErrorMessage
+    }
+    <table class="table">
+        <thead>
+        <th>Id</th>
+        <th>Tipo</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Color</th>
+        <th>Gallons</th>
+        <th>Status</th>
+        <th>Actions</th>
+        </thead>
+        @foreach (var vehicle in Model.Vehicles)
+        {
+    <tr>
+        <td>
+            @vehicle.ID
+        </td>
+        <td>
+            @(vehicle.GetType().Name)
+        </td>
+        <td>
+            @vehicle.Brand
+        </td>
+        <td>
+            @vehicle.Model
+        </td>
+        <td>
+            @vehicle.Year
+        </td>
+        <td>
+            @vehicle.Color
+        </td>
+        <td>
+            @vehicle.Gas.ToString("N1")
+        </td>
+        <td>
+            @(vehicle.IsEngineOn() ? "Encendido": "Apagado")
+        </td>
+        <td>
+            @if (vehicle.IsEngineOn())
+            {
+                <a href="/Home/StopEngine?id=@vehicle.ID">Stop Engine</a> }
+            else
+            {
+                <a href="/Home/StartEngine?id=@vehicle.ID">Start Engine</a>
+            }
+
+            <a href="/Home/AddGas?id=@vehicle.ID">LLenar tanque</a>
+
+        </td>
+    </tr>
+        }
+    </table>
+
+    <a href="/Home/AddMustang">Add Mustang</a>
+    <a href="/Home/AddExplorer">Add Explorer</a>
+    <a href="/Home/AddEscape">Add Escape</a>
+</div>

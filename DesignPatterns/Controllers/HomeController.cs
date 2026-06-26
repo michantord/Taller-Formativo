@@ -1,0 +1,127 @@
+﻿using DesignPatterns.Models;
+using DesignPatterns.Patterns.Factories;
+using DesignPatterns.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DesignPatterns.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        private readonly IVehicleRepository _vehicleRepository;
+
+        public HomeController(IVehicleRepository vehicleRepository,ILogger<HomeController> logger)
+        {
+            _vehicleRepository = vehicleRepository;
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            var model = new HomeViewModel();
+            model.Vehicles = _vehicleRepository.GetVehicles();
+            string error = Request.Query.ContainsKey("error") ? Request.Query["error"].ToString() : null;
+            ViewBag.ErrorMessage = error;
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult AddMustang()
+        {
+            // Factory Method (qué modelo) + Builder (año actual + propiedades por defecto).
+            var vehicle = new MustangFactory().Build();
+            _vehicleRepository.AddVehicle(vehicle);
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult AddExplorer()
+        {
+            var vehicle = new ExplorerFactory().Build();
+            _vehicleRepository.AddVehicle(vehicle);
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult AddEscape()
+        {
+            // Nuevo modelo solicitado (Ford Escape rojo). Solo se necesitó una nueva
+            // fábrica concreta: el resto del flujo ya funciona sin cambios.
+            var vehicle = new EscapeFactory().Build();
+            _vehicleRepository.AddVehicle(vehicle);
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult StartEngine(string id)
+        {
+            try
+            {
+                var vehicle = _vehicleRepository.Find(id);
+                vehicle.StartEngine();
+                return Redirect("/");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return Redirect($"/?error={ex.Message}");
+            }
+          
+        }
+
+        [HttpGet]
+        public IActionResult AddGas(string id)
+        {
+
+            try
+            {
+                var vehicle = _vehicleRepository.Find(id);
+                vehicle.AddGas();
+                return Redirect("/");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return Redirect($"/?error={ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult StopEngine(string id)
+        {
+            try
+            {
+                var vehicle = _vehicleRepository.Find(id);
+                vehicle.StopEngine();
+                return Redirect("/");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return Redirect($"/?error={ex.Message}");
+            }
+           
+           
+        }
+
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
