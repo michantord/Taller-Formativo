@@ -2,12 +2,12 @@
 
 Tarea 12 — Aplicación de mejores prácticas, principios SOLID y patrones de diseño sobre el aplicativo de automóviles de *Codificando Con Patrones Cía. Ltda.*
 
-## 🔗 Enlaces
+## Enlaces
 
 - **Repositorio (GitHub):** https://github.com/michantord/Taller-Formativo
 - **Video de evidencia (YouTube):** _(pendiente — agregar link aquí)_
 
-## 📋 ¿Qué se implementó?
+## ¿Qué se implementó?
 
 | Requerimiento | Solución |
 |---------------|----------|
@@ -17,13 +17,13 @@ Tarea 12 — Aplicación de mejores prácticas, principios SOLID y patrones de d
 | Nuevos modelos (Ford Escape rojo) | Patrón **Factory Method** |
 | Botón en la migración a Next.js | `revalidatePath` en el Server Action + Factory Method en TypeScript |
 
-## 📁 Estructura
+## Estructura
 
 - `DesignPatterns/` — Backend MVC en ASP.NET Core (.NET 8)
 - `headapps/app/` — Migración del core a Next.js 16 / React 19
 - `docs/` — Documento técnico (`Documento-Tecnico.pdf`) y guion del video (`Guion-Video.md`)
 
-## ▶️ Cómo ejecutar
+## ▶Cómo ejecutar
 
 **Backend .NET**
 ```bash
@@ -41,7 +41,7 @@ npm run dev
 # Abrir http://localhost:3000
 ```
 
-## 📐 Patrones aplicados
+## Patrones aplicados
 
 - **Repository + Inyección de Dependencias**
 - **Builder**
