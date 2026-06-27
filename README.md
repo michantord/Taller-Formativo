@@ -23,7 +23,7 @@ Tarea 12 — Aplicación de mejores prácticas, principios SOLID y patrones de d
 - `headapps/app/` — Migración del core a Next.js 16 / React 19
 - `docs/` — Documento técnico (`Documento-Tecnico.pdf`) y guion del video (`Guion-Video.md`)
 
-## ▶Cómo ejecutar
+## Cómo ejecutar
 
 **Backend .NET**
 ```bash
